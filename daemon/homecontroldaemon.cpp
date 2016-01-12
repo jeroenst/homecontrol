@@ -55,17 +55,17 @@ exit(1);
 }
 //
 //install the serial handler before making the device asynchronous
-saio.sa_handler = signal_handler_IO;
-sigemptyset(&saio.sa_mask);   //saio.sa_mask = 0;
-saio.sa_flags = 0;
-saio.sa_restorer = NULL;
-sigaction(SIGIO,&saio,NULL);
+//saio.sa_handler = signal_handler_IO;
+//sigemptyset(&saio.sa_mask);   //saio.sa_mask = 0;
+//saio.sa_flags = 0;
+//saio.sa_restorer = NULL;
+//sigaction(SIGIO,&saio,NULL);
 //
 // allow the process to receive SIGIO
-fcntl(fd, F_SETOWN, getpid());
+//fcntl(fd, F_SETOWN, getpid());
 //
 // make the file descriptor asynchronous
-fcntl(fd, F_SETFL, FASYNC);
+//fcntl(fd, F_SETFL, FASYNC);
 //
 // set new port settings for canonical input processing
 newtio.c_cflag = B9600 | CRTSCTS | CS8 | CLOCAL | CREAD;
@@ -97,10 +97,26 @@ tcsetattr(fd,TCSANOW,&newtio);
                 printf(" Message Queue Opened\n");
 
                 printf(" Receiving message....\n");
-                while (1)
-                {
+                while(1)
+		{
+		    fd_set set;
+		    struct timeval timeout;
+		    /* Initialize the file descriptor set. */
+		    FD_ZERO (&set);
+		    FD_SET (mqd, &set);
+		    FD_SET (fd, &set);
+
+		    /* Initialize the timeout data structure. */
+	            timeout.tv_sec = 5;
+		    timeout.tv_usec = 0;
+
+		    if (select (FD_SETSIZE, &set, NULL, NULL, &timeout) == 0)
+		    {
+                       // If timeout send next message to arduino if no response on previous command
+                       waitforanswer = 0;   		        
+		    }
+
                     msg_len = mq_receive(mqd, msg, MQ_MESSAGE_MAX_LENGTH, 0);
-                    
                     if(msg_len > 0) // if a message is received from message queueu put it in arduino queue
                     {
                         msg[msg_len] = '\0';
@@ -109,20 +125,16 @@ tcsetattr(fd,TCSANOW,&newtio);
 
                     }
 
-                    if (wait_flag == FALSE)  //if input is available from arduino print to screen
+                    int flags = fcntl(fd, F_GETFL, 0);
+                    fcntl(fd, F_SETFL, flags | O_NONBLOCK);
+                    char buf[4096];
+                    res = read(fd,buf,4096);
+                    if (res > 0)
                     {
-                            int flags = fcntl(fd, F_GETFL, 0);
-                            fcntl(fd, F_SETFL, flags | O_NONBLOCK);
-                            char buf[4096];
-                            res = read(fd,buf,4096);
-                            if (res > 0)
-                            {
-                                buf[res] = 0;
-                                printf(" Received from arduino: %s", buf);
-                                waitforanswer = 0;
-                            }
-                            wait_flag = TRUE;      /* wait for new input */
-                     }
+                          buf[res] = 0;
+                          printf(" Received from arduino: %s", buf);
+                          waitforanswer = 0;
+                    }
 
                     if (waitforanswer == 0) //wait with sending until arduino has send an answer and is ready for next command
                     {
@@ -159,15 +171,3 @@ tcsetattr(fd,TCSANOW,&newtio);
         close(fd);
         return 0;
 }
-//
-/***************************************************************************
-* signal handler. sets wait_flag to FALSE, to indicate above loop that     *
-* characters have been received.                                           *
-***************************************************************************/
-//
-void signal_handler_IO (int status)
-{
-wait_flag = FALSE;
-}
-
-
