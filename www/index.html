@@ -20,27 +20,75 @@ function submitHomecontrol(action)
 </script>
 
 <head>
- <title>Domotica</title>
+ <title>Homecontrol</title>
 <style>
 html *
 {
-   font-size: 1.3em !important;
-   color: #000 !important;
+   font-size: 20px !important;
+   color: #FFFFFF;
    font-family: Arial !important;
 }
 button
 {
    background-color:white;
+color:black;
+width: 50px;
+height: 40px;
 }
-body
+body {
+   background-color: #014051;
+      color: #FFFFFF;
+}
+table
 {
-  background-color:#DDDDDD;
+  border-collapse:separate;
+  border-spacing:0px;
+  font-size: 0.75em;
+  border:4px solid #005A6F;
+  width: 340px;
+  margin-bottom:4px;
+  background-color: #005A6F;
 }
+tr {
+   width: 330px;
+}
+
+tr.good {
+    background-color: #65AB24;
+}
+
+tr.warning {
+    background-color: #F3B200;
+}
+
+tr.critical {
+    background-color: #660202;
+}
+
+th {
+	border:0px solid black;
+    font-size: 1.5em;
+}
+
+td {
+    padding: 4px;
+    border:0px solid #2672EC;
+  }
+    
+td.left {
+   width: 220px;
+   }
 </style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
 <body><center>
 <table width="100%">
-<tr><td>Tv/Audio</td><td align=right><button onclick="submitHomecontrol('newkaku on 3');">On</button><button onclick="submitHomecontrol('newkaku off 3');">Off</button></td></tr>
+<tr><th colspan="2">Huiskamer</th></tr>
+<tr><td>TV/Audio</td><td align=right><button onclick="submitHomecontrol('newkaku on 2');">On</button> <button onclick="submitHomecontrol('newkaku off 2');">Off</button></td></tr>
+<tr><td>Stalamp</td><td align=right><button onclick="submitHomecontrol('newkaku on 3');">On</button> <button onclick="submitHomecontrol('newkaku off 3');">Off</button></td></tr>
+<tr><td>Vitrine</td><td align=right><button onclick="submitHomecontrol('newkaku on 4');">On</button> <button onclick="submitHomecontrol('newkaku off 4');">Off</button></td></tr>
+<tr><td>All</td><td align=right><button onclick="submitHomecontrol('newkaku groupon');">On</button> <button onclick="submitHomecontrol('newkaku groupoff');">Off</button></td></tr>
+
 </table>
 </center></html></body>
