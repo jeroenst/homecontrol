@@ -10,8 +10,10 @@ g++ -o homecontrol homecontrol.cpp -lrt
 echo "\n=== Installing Executeables ===\n"
 sudo cp -v homecontroldaemon /usr/sbin
 sudo cp -v homecontrol /usr/bin
-#sudo chmod +s /usr/bin/homecontrol
 cd ..
+
+echo "\n=== Installing Initscript ===\n"
+sudo cp /daemon/homecontroldaemon.init.d /etc/init.d/homecontroldaemon
 
 echo "\n=== Installing Webpages ===\n"
 rm -rf /var/www/homecontrol
