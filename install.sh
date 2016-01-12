@@ -13,7 +13,7 @@ sudo cp -v homecontrol /usr/bin
 cd ..
 
 echo "\n=== Installing Initscript ===\n"
-sudo cp /daemon/homecontroldaemon.init.d /etc/init.d/homecontroldaemon
+sudo cp ./daemon/homecontroldaemon.init.d /etc/init.d/homecontroldaemon
 
 echo "\n=== Installing Webpages ===\n"
 rm -rf /var/www/homecontrol
