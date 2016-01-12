@@ -1,5 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+
 <html>
+
+<script type="text/JavaScript">
+
+function submitHomecontrol(action)
+{
+    var url = "homecontrol.php?" + action;
+
+    // get the URL
+    http = new XMLHttpRequest(); 
+    http.open("GET", url, true);
+    http.send(null);
+
+    // prevent form from submitting
+    return false;
+}
+
+</script>
+
 <head>
+ <title>Domotica</title>
 <style>
 html *
 {
@@ -16,12 +37,10 @@ body
   background-color:#DDDDDD;
 }
 </style>
-<body>
-<center>
+</head>
+
+<body><center>
 <table width="100%">
-<tr><td>Tv/Audio</td><td align=right><button type="submit" value="submit" style="background-color:lightgreen">On</button> <button type="submit" value="submit">Off</button></td></tr>
-<tr><td>Lamp Zithoek</td><td align=right><button type="submit" value="submit">On</button> <button type="submit" value="submit" style="background-color:lightgreen">Off</button></td></tr>
-<tr><td>Lamp Drankkast</td><td align=right><button type="submit" value="submit">On</button> <button type="submit" value="submit" style="background-color:lightgreen">Off</button></td></tr>
-</center>
-</body>
-</html>
+<tr><td>Tv/Audio</td><td align=right><button onclick="submitHomecontrol('newkaku on 3');">On</button><button onclick="submitHomecontrol('newkaku off 3');">Off</button></td></tr>
+</table>
+</center></html></body>
