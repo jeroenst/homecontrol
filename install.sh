@@ -8,7 +8,9 @@ echo "homecontrol..."
 g++ -o homecontrol homecontrol.cpp -lrt
 
 echo "\n=== Installing Executeables ===\n"
+service homecontroldaemon stop
 sudo cp -v homecontroldaemon /usr/sbin
+service homecontroldaemon start
 sudo cp -v homecontrol /usr/bin
 cd ..
 
