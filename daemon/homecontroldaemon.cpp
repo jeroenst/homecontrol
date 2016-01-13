@@ -44,7 +44,15 @@ char msg[MQ_MESSAGE_MAX_LENGTH];
 ssize_t msg_len;
 
 
-if (argc > 1) strcpy (devicename, argv[1]);
+if (argc > 1)
+{
+    strcpy (devicename, argv[1]);
+}
+else
+{
+    printf ("Usage: homecontroldaemon <device like /dev/ttyUSB0>\n");
+    exit(1);
+}
 //
 //open the device in non-blocking way (read will return immediately)
 fd = open(devicename, O_RDWR | O_NOCTTY | O_NONBLOCK);
