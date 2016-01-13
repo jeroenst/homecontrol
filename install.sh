@@ -17,6 +17,10 @@ cd ..
 echo "\n=== Installing Initscript ===\n"
 sudo cp ./daemon/homecontroldaemon.init.d /etc/init.d/homecontroldaemon
 
+echo "\n=== Installing udev rules file ===\n"
+cp ./daemon/99-homecontrol.rules /etc/udev/rules.d/
+
+
 echo "\n=== Installing Webpages ===\n"
 rm -rf /var/www/homecontrol
 cp -vR ./www /var/www/homecontrol
