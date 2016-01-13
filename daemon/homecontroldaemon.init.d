@@ -28,7 +28,7 @@ DESC="homecontrol  monitoring daemon"
 case "$1" in
   start)
     # master switch
-        start-stop-daemon --start --quiet --exec $DAEMON /dev/ttyACM0 >/dev/null 2>&1 &
+        start-stop-daemon --start --quiet --exec $DAEMON /dev/ttyHomecontrol >/dev/null 2>&1 &
     ;;
   stop)
     start-stop-daemon --stop --quiet --exec $DAEMON
