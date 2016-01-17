@@ -16,14 +16,14 @@
 # Required-Stop:     $remote_fs $syslog $network
 # Default-Start:     2 3 4 5
 # Default-Stop:      0 1 6
-# Short-Description: disk temperature monitoring daemon
-# Description:       hddtemp is a disk temperature monitoring daemon
+# Short-Description:
+# Description:
 ### END INIT INFO
 
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 NAME=homecontroldaemon
 DAEMON=/usr/sbin/$NAME
-DESC="homecontrol  monitoring daemon"
+DESC="homecontroldaemon"
 
 case "$1" in
   start)

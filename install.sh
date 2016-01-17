@@ -9,16 +9,17 @@ g++ -o homecontrol homecontrol.cpp -lrt
 
 echo "\n=== Installing Executeables ===\n"
 service homecontroldaemon stop
-sudo cp -v homecontroldaemon /usr/sbin
+cp -v homecontroldaemon /usr/sbin
 service homecontroldaemon start
-sudo cp -v homecontrol /usr/bin
+cp -v homecontrol /usr/bin
 cd ..
 
 echo "\n=== Installing Initscript ===\n"
-sudo cp ./daemon/homecontroldaemon.init.d /etc/init.d/homecontroldaemon
-
+cp -v ./daemon/homecontroldaemon.init.d /etc/init.d/homecontroldaemon
+update-rc.d homecontroldaemon defaults
+ 
 echo "\n=== Installing udev rules file ===\n"
-cp ./daemon/99-homecontrol.rules /etc/udev/rules.d/
+cp -v ./daemon/99-homecontrol.rules /etc/udev/rules.d/
 
 
 echo "\n=== Installing Webpages ===\n"
