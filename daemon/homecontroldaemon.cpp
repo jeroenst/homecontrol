@@ -62,10 +62,10 @@ else
         attr.mq_curmsgs = 0; // mq_curmsgs is dont care
         system ("mkdir /dev/mqueue >/dev/null 2>&1");
         system ("mount -t mqueue none /dev/mqueue >/dev/null 2>&1");
-        system (string("sudo chmod 666 /dev/mqueue" + string(MQ_NAME) + " >/dev/null 2>&1").c_str());
         mqd = mq_open(MQ_NAME, O_RDONLY | O_CREAT | O_NONBLOCK, MQ_MODE, &attr);
         if( mqd != (mqd_t)-1 )
         {
+                system (string("chmod 666 /dev/mqueue/" + string(MQ_NAME) + " >/dev/null 2>&1").c_str());
                 printf(" Message Queue Opened\n");
                 printf(" Receiving message....\n");
                 while(1)
